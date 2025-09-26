@@ -20,7 +20,10 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[12pt,letterpaper]{report}
-\input{comunes/preamble}
+\makeatletter
+\def\input@path{{../common/}{../guide/}{../data/}{../code/}}
+\makeatother
+\input{preamble}
 \usepackage{listofitems}
 \usepackage{csvsimple}
 \usepackage{geometry} 
@@ -34,7 +37,7 @@
 
 %----------------------------------------------------------------------------------------
 \lhead{Instructivo de Prácticas - Instrumentación II}
-\rhead{\begin{picture}(0,0) \put(-60,0){\includegraphics[width=20mm]{fig/comunes/logo.png}} \end{picture}}
+\rhead{\begin{picture}(0,0) \put(-60,0){\includegraphics[width=20mm]{comunes/logo.png}} \end{picture}}
 \newcommand{\obj}{Objetivos}
 \newcommand{\mat}{Materiales y equipo}
 \newcommand{\pro}{Procedimiento}
@@ -56,7 +59,7 @@
 \vspace*{1in}
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=11cm]{fig/comunes/logo.png}
+\includegraphics[width=11cm]{comunes/logo.png}
 \end{center}
 \end{figure}
 \vspace*{0.4in}
@@ -90,81 +93,7 @@ Realizado por: Juan J. Rojas\\
 
 \tableofcontents
 
-\chapter{Implementación de un instrumento virtual básico}
-\section{\obj}
-\capacidad
-\begin{itemize}
-\item Implementar un instrumento virtual básico.
-\item Implementar una interfaz de usuario básica.
-\item Utilizar un DAQ para medir corriente y voltaje.
-\end{itemize}
 
-\section{\mat}
-\textbf{A suministrar por la Escuela:}
-\begin{itemize}
-\item 1 dispositivo de adquisición de datos NI myDAQ
-
-\end{itemize}
-\textbf{A suministrar por el estudiante:}
-\begin{itemize}
-\item 1 breadboard
-\item 1 potenciometro de \SI{10}{\kilo\ohm}
-\item 1 resistor de \SI{220}{\ohm} y \SI{0.25}{\watt}
-\item Cables de interconexión (jumpers) macho-macho
-\end{itemize}
-
-
-\section{\pro}
-\begin{enumerate}
-\item Realice las conexiones del circuito tal y como se indica en la Figura \ref{fig:L1F1}.
-\begin{figure}[H]
-    \centering
-    \begin{circuitikz} 
-        \draw
-        (5.5,3) node[ground]{}
-            to[V] 
-        (5.5,6) node[above]{$+$\SI{15}{\volt}} 
-            --
-        (3,6)
-        	to[american potentiometer,n=mypot, l_=0$\sim$\SI{10}{\kilo\ohm},i=$i$]
-        (3,3) 
-        %(mypot.wiper) to[short,-o] ++(2,0)
-        (3,3)
-            to[R, l_=\SI{200}{\ohm}, v^=$v$]
-        (3,0)
-            --
-        (3,-0.5)
-            --
-        (5.5,-0.5) node[ground]{}node[above]{AGND}
-        ;
-        \draw 
-        (5.5,1.5) node[op amp, noinv input up](opamp){AI0}
-        (opamp.+) --++ (-0.5,0) --++ (0,0.7) to[short,-*]++ (-0.8,0)
-        (opamp.-) --++ (-0.5,0) --++ (0,-0.7) to[short,-*]++ (-0.8,0)
-        ;
-        \draw[dashed,blue]
-        (4,8) -- (7,8)node[midway, below]{myDAQ} -- (7,-1.5) -- (4,-1.5) -- (4,8);
-    \end{circuitikz}
-    \caption{Medición de corriente y voltaje en un circuito.}
-    \label{fig:L1F1}
-\end{figure}
-\item Cree un instrumento virtual (\emph{.vi}) que realice lo siguiente:
-    \begin{itemize}
-        \item Leer en un While 100 muestras del valor de AI0 durante \SI{100}{\milli\second} y las promedie
-        \item Calcular el valor promedio de las muestras obtenidas $v$ cada \SI{100}{\milli\second} y lo muestre en un gráfica en el panel frontal
-        \item Calcular el valor promedio de las muestras obtenidas $i$ cada \SI{100}{\milli\second} y lo muestre en un gráfica en el panel frontal
-        \item Iniciar la gráfica vacía. 
-        \item Detener la toma de datos después de \SI{10}{\second}
-    \end{itemize}
-\item Una vez realizado el instrumento virtual córralo, modifique de forma aleatoria el valor del potenciometro y guarde los datos de las gráficas como archivos \emph{.csv}.
-\item Incluya en su informe lo siguiente:
-    \begin{itemize}
-        \item Una captura de pantalla del diagrama de bloques
-        \item Una captura de pantalla del panel frontal
-        \item Una gráfica de $i$ realizada a partir del archivo \emph{.csv}, usando Python. Incluya los títulos de los ejes de forma adecuada. 
-        \item Una gráfica de $v$ realizada a partir del archivo \emph{.csv}, usando Python. Incluya los títulos de los ejes de forma adecuada. 
-    \end{itemize}
-\end{enumerate}
 
 \chapter{Estructuras de datos}
 \section{\obj}
@@ -258,7 +187,7 @@ Realizado por: Juan J. Rojas\\
 
 Detalle del interruptor rotativo:
 \begin{center}
-    \includegraphics[width=0.3\textwidth]{fig/rotary_switch.jpg}
+    \includegraphics[width=0.3\textwidth]{rotary_switch.jpg}
 \end{center}
 
 \chapter{Estructuras de ejecución}
@@ -287,7 +216,7 @@ Detalle del interruptor rotativo:
 
 \section{\pro}
 \begin{enumerate}
-\item Realice las conexiones del circuito tal y como se indica en la Figura \ref{fig:L1F1}.
+\item Realice las conexiones del circuito tal y como se indica en la Figura \ref{fig:L3F1}.
 \item Cree un instrumento virtual (\emph{.vi}) que realice lo siguiente:
     \begin{itemize}
         \item Leer en una estructura temporizada 500 muestras del valor de $v$ cada \SI{500}{\milli\second}, sacar el promedio de las muestras y mostrarlo en un indicador.
