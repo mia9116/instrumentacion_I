@@ -1,0 +1,16 @@
+﻿semana,tema,objetivo,metodo,entregables
+2,"Estructuras de datos: cadenas, numéricos y booleanos. Estructuras de ejecución: For",Implementar estructuras de datso ,Práctica guiada ejecutada en clase,
+3,"Estructuras de datos: cadenas, numéricos, booleanos y arreglos. Estructuras de ejecución: While",Aplicar estructuras de datos en una adquisicion simple y validar resultados,LabVIEW; dataset de prueba,Reporte de laboratorio 1
+4,Estructuras de ejecucion,Construir logicas de control de flujo con while for case y temporizacion,LabVIEW; ejemplos de control de flujo,Tarea 2
+4,Practica de estructuras de ejecucion,Implementar una rutina de adquisicion temporizada con control de paro seguro,LabVIEW; DAQ,Reporte de laboratorio 2
+5,Maquinas de estados,Disenar una arquitectura por estados para secuencias de medicion y control,LabVIEW; plantilla de maquina de estados,Tarea 3
+6,Practica de maquinas de estados,Desarrollar un VI con maquina de estados para un proceso de medicion automatizado,LabVIEW; DAQ; rubrica de practica,Reporte de laboratorio 3
+7,Guardado de archivos,Estructurar almacenamiento de datos de forma trazable y reutilizable,LabVIEW File I/O; formato CSV o TDMS,Tarea 4
+8,Practica de guardado de archivos,Registrar y recuperar datos experimentales para analisis posterior,LabVIEW; archivos de registro,Reporte de laboratorio 4
+9,Interfaces graficas,Disenar interfaces de usuario para visualizacion y operacion de instrumentos virtuales,LabVIEW front panel; guia de usabilidad,Tarea 5
+10,Practica de interfaces graficas,Construir una interfaz funcional para monitoreo y control en tiempo real,LabVIEW; DAQ; checklist de interfaz,Reporte de laboratorio 5
+11,Comunicacion serial y USB,Configurar intercambio de datos con dispositivos externos mediante VISA,LabVIEW VISA; equipo serial USB,Tarea 6
+12,Practica de comunicacion serial y USB,Implementar un enlace estable de comunicacion y validarlo con pruebas de transferencia,LabVIEW; dispositivo serial; manual de comandos,Reporte de laboratorio 6
+13,Control de instrumentos externos,Automatizar el control de instrumentos mediante comandos programados,LabVIEW; instrumentos con SCPI,Prueba corta 2
+14,Practica de control de instrumentos externos,Integrar medicion y accion sobre un instrumento externo en un flujo automatizado,LabVIEW; instrumento SCPI; DAQ,Prueba corta 3
+15,Norma ISA 51 calibracion trazabilidad verificacion validacion y propagacion de incertidumbres,Evaluar el desempeno metrologico del sistema y cuantificar incertidumbre de medicion,Norma ISA 5.1; guias de metrologia; hoja de calculo,Prueba corta 4
