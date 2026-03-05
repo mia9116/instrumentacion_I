@@ -8,7 +8,7 @@ from pylatex import Document, Package, Chapter, Section, Subsection, Subsubsecti
     LongTable,MultiColumn,\
     TikZ, TikZNode, TikZOptions, TikZCoordinate
 from pylatex.base_classes import Environment, Arguments
-from pylatex.utils import NoEscape, bold, italic
+from pylatex.utils import NoEscape, bold, italic, escape_latex
 from datetime import date, timedelta
 
 root = Path(__file__).resolve().parent.parent
@@ -23,6 +23,15 @@ id = "IF3503"
 content = pd.read_csv(plan_dir / f"plan.csv").fillna("")
 
 print(content.head())
+
+def bulleted_lines_after_period(value):
+    text = str(value).strip()
+    if not text:
+        return ""
+
+    parts = [part.strip() for part in text.split(".") if part.strip()]
+    lines = [rf"\textbullet\ {escape_latex(part)}." for part in parts]
+    return NoEscape(r"\newline ".join(lines))
 
 
 def make_plan_pdf(id,course,images_dir):
@@ -123,7 +132,13 @@ def make_plan_pdf(id,course,images_dir):
         table.add_hline()
         table.end_table_header()
         for _,row in content.iterrows():
-            table.add_row([row.semana,row.tema,row.objetivo,row.metodo,row.entregables])
+            table.add_row([
+                row.semana,
+                bulleted_lines_after_period(row.tema),
+                bulleted_lines_after_period(row.objetivo),
+                bulleted_lines_after_period(row.metodo),
+                bulleted_lines_after_period(row.entregables),
+            ])
             table.add_hline()
         
 
