@@ -1,50 +1,53 @@
 \documentclass[aspectratio=169]{beamer}
+\makeatletter
+\def\input@path{{../common/}{../guide/}{../data/}{../code/}}
+\makeatother
 \usetheme{Bruno}
-\input{comunes/preamble}
+\input{preamble}
 \title{Instrumentación II: \\ \emph{Adquisición de}\\ \emph{datos}}
 \author{Juan J. Rojas}
 \institute{Instituto Tecnológico de Costa Rica}
 \date{\today}
-\background{fig/comunes/background.jpg}
+\background{../figures/comunes/background.jpg}
 \begin{document}
-\input{comunes/postamble}
+\input{postamble}
 \maketitle
 
 \newcommand{\blackandwhite}{white} %change this at the end
 
 \begin{frame}{Sistema de adquisición de datos}
 \begin{center}
-    \includegraphics[width=0.7\linewidth]{presentaciones/fig/daqs.jpg}
+    \includegraphics[width=0.7\linewidth]{fig/daqs.jpg}
 \end{center}
 \end{frame}
 
 \begin{frame}{Señales}
 \begin{center}
-    \includegraphics[width=0.8\linewidth]{presentaciones/fig/analogicavrsdigital.jpg}
+    \includegraphics[width=0.8\linewidth]{fig/analogicavrsdigital.jpg}
 \end{center}
 \end{frame}
 
 \begin{frame}{Analógica}
 \begin{center}
-    \includegraphics[width=0.8\linewidth]{presentaciones/fig/analogsignal.png}
+    \includegraphics[width=0.8\linewidth]{fig/analogsignal.png}
 \end{center}
 \end{frame}
 
 \begin{frame}{Digital}
 \begin{center}
-    \includegraphics[width=0.7\linewidth]{presentaciones/fig/digitalsignal.png}
+    \includegraphics[width=0.7\linewidth]{fig/digitalsignal.png}
 \end{center}
 \end{frame}
 
 \begin{frame}{Etapas de la conversión A/D}
 \begin{center}
-    \includegraphics[width=0.93\linewidth]{presentaciones/fig/convAD.jpg}
+    \includegraphics[width=0.93\linewidth]{fig/convAD.jpg}
 \end{center}
 \end{frame}
 
 \begin{frame}{Muestreo, cuantización y codificación}
 \begin{center}
-    \includegraphics[width=0.9\linewidth]{presentaciones/fig/muestreo.jpg}
+    \includegraphics[width=0.9\linewidth]{fig/muestreo.jpg}
 \end{center}
 \end{frame}
 
@@ -60,7 +63,7 @@
     \end{column}
     \begin{column}{0.6\textwidth}
         \begin{center}
-            \includegraphics[width=0.9\linewidth]{presentaciones/fig/sampling.png}  
+            \includegraphics[width=0.9\linewidth]{fig/sampling.png}  
         \end{center}
     \end{column}
     \end{columns}
@@ -81,7 +84,7 @@
     \end{column}
     \begin{column}{0.6\textwidth}
         \begin{center}
-            \includegraphics[width=0.8\linewidth]{presentaciones/fig/resolution.png}  
+            \includegraphics[width=0.8\linewidth]{fig/resolution.png}  
         \end{center}
     \end{column}
     \end{columns}
@@ -90,7 +93,7 @@
 
 \begin{frame}{Ejemplo: aproximación sucesiva}
 \begin{center}
-    \includegraphics[width=0.4\linewidth]{presentaciones/fig/SAR.png}
+    \includegraphics[width=0.4\linewidth]{fig/SAR.png}
 
 \end{center}
 {\tiny
@@ -99,7 +102,7 @@ Sinha, Aritra and Sunit Kumar Sen. “Design of an improved successive approxima
 
 \begin{frame}{Ejemplo: aproximación sucesiva}
         \centering
-        \includegraphics[width=0.9\textwidth]{presentaciones/fig/SARplots.png}
+        \includegraphics[width=0.9\textwidth]{fig/SARplots.png}
 \end{frame}
 
 % \begin{frame}{Referencias}
