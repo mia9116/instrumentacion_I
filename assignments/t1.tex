@@ -1,6 +1,9 @@
 \documentclass[12pt]{article}
 \usepackage[margin=1in]{geometry} 
-\input{comunes/preamble}
+\makeatletter
+\def\input@path{{../common/}{../guide/}{../data/}{../code/}}
+\makeatother
+\input{preamble}
 \usepackage{lastpage}
 \usepackage{fancyhdr}
 \usepackage{csvsimple,booktabs}
@@ -10,9 +13,12 @@
  
 \begin{document}
 \lhead{Ingeniería Física \\ Escuela de Física \\ Tecnológico de Costa Rica} 
-\rhead{Instrumentación II \\ Tarea \#1  \\ Entrega: Semana 3} 
+\rhead{Instrumentación II \\ Tarea \#1  \\ Entrega: Semana 5} 
 \cfoot{\thepage\ de \pageref{LastPage}}
 \setlength{\parindent}{0em}
+
+Investigue como funciona un Convertidor Analógico-Digital del tipo \emph{Successive Approximation Register} (SAR), puede apoyarse en esta \href{https://adc-dashboard.streamlit.app/}{web app}.
+
 
 Usando un Notebook de \href{https://colab.research.google.com/}{Google Colab} realice lo siguiente:
 
@@ -22,7 +28,7 @@ Usando un Notebook de \href{https://colab.research.google.com/}{Google Colab} re
         \centering
         \begin{tikzpicture}
             \begin{axis}
-            \addplot table [x=t, y=s, col sep=comma, mark=none] {data/adc.csv};
+            \addplot table [x=t, y=s, col sep=comma, mark=none] {../data/adc.csv};
             \end{axis}
         \end{tikzpicture}
         \caption{}
