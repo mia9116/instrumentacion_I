@@ -115,13 +115,13 @@ def make_plan_pdf(id,course,images_dir):
                 "inner sep = 0mm",
                 "outer sep = 0mm",
                 "anchor = north west",
-                "xshift = 220mm",
+                "xshift = 210mm",
                 "yshift = 20mm"
                 ),
             text=StandAloneGraphic(image_options="width=5cm", filename=logo_path).dumps(),\
             at=TikZCoordinate(0,0)
         ))
-    doc.append(VerticalSpace("20mm", star=True))
+    doc.append(VerticalSpace("2mm", star=True))
     doc.append(NewLine())
     with doc.create(
         LongTabularx(
