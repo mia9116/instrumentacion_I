@@ -1,8 +1,0 @@
-\babel@toc {spanish}{}\relax 
-\contentsline {section}{\numberline {1}Objetivos}{2}{section.1}%
-\contentsline {section}{\numberline {2}Investigación previa}{2}{section.2}%
-\contentsline {section}{\numberline {3}Materiales y equipo}{2}{section.3}%
-\contentsline {section}{\numberline {4}Procedimiento}{3}{section.4}%
-\contentsline {section}{\numberline {5}Resultados}{4}{section.5}%
-\contentsline {section}{\numberline {6}Análisis de resultados}{5}{section.6}%
-\contentsline {section}{\numberline {7}Conclusiones}{5}{section.7}%
