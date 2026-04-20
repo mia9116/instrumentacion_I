@@ -1,5 +1,4 @@
-> Mía:
-[4/20, 08:37] Kashana 🌻: % !TEX root = 00_instructivo.tex
+% !TEX root = 00_instructivo.tex
 \chapter{Transductores eléctricos y magnéticos: Magnetohidrodinamica}
 
 \section*{Objetivos}
@@ -108,45 +107,3 @@
     \item Hoja de datos QMC5883L. Honeywell.
    
 \end{itemize}
-[4/20, 08:37] Kashana 🌻: % !TEX root = 00_instructivo.tex
-\chapter{Transductores mecánicos: Acelerómetro y podómetro}
-
-\section*{Objetivos}
-\begin{itemize}
-    \item Comprender el principio de funcionamiento de un acelerómetro MEMS (MPU6050).
-    \item Implementar un algoritmo de conteo de pasos (podómetro) usando la magnitud del vector de aceleración.
-    \item Evaluar la precisión del podómetro en diferentes condiciones de movimiento (caminar, correr, movimientos bruscos).
-    \item Alimentar el sistema con una batería portable para demostrar su uso en aplicaciones de monitoreo de actividad.
-\end{itemize}
-
-\section*{Preguntas previas}
-\begin{enumerate}
-    \item ¿Qué es una IMU (Unidad de Medición Inercial) y qué grados de libertad ofrece el MPU6050?
-    \item ¿Por qué se usa la magnitud de la aceleración (\( \sqrt{a_x^2 + a_y^2 + a_z^2} \)) y no un solo eje para detectar pasos?
-    \item ¿Qué es el \textit{efecto de histéresis} en el contexto de un umbral de detección?
-    \item Investigue: ¿qué es el DMP (Digital Motion Processor) del MPU6050 y para qué sirve?
-\end{enumerate}
-
-\section*{Materiales y equipo}
-\begin{itemize}
-    \item Arduino Uno (o Arduino Nano para versión portable).
-    \item Módulo MPU6050 (acelerómetro + giróscopo 6-DOF).
-    \item Batería recargable de 9V o power bank 5V (para alimentación portable).
-    \item Conector para batería (clips o cable USB).
-    \item Mini protoboard.
-    \item Cables Dupont.
-    \item Cinta o velcro para fijar el conjunto a la cintura o al tobillo.
-    \item Computadora con IDE Arduino (para carga inicial y monitoreo).
-\end{itemize}
-
-\section*{Procedimiento}
-\begin{enumerate}
-    \item \textbf{Conexión y prueba del MPU6050:}
-    \begin{enumerate}
-        \item Conecte el MPU6050 al Arduino (VCC a 5V, GND a GND, SDA a A4, SCL a A5).
-        \item Cargue el código de la Sección 4.1 de la guía (podómetro).
-        \item Verifique en el monitor serial que se leen valores de aceleración.
-    \end{enumerate}
-    \item \textbf{Calibración del umbral:}
-    \begin{enumerate}
-        \item Sujete el MPU6050 firmemente a su cintura o tobillo.
