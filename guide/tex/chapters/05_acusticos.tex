@@ -1,0 +1,97 @@
+% !TEX root = 00_instructivo.tex
+\chapter{Transductores acústicos: Monitoreo Submarino}
+
+\section*{Objetivos}
+\begin{itemize}
+    \item Construir un hidrófono básico usando un sensor piezoeléctrico impermeable.
+    \item Amplificar la señal del piezoeléctrico con un módulo MAX4466.
+    \item Clasificar niveles de presión sonora subacuática (decibeles relativos) mediante un algoritmo de pico a pico.
+    \item Activar indicadores visuales (LEDs) según la intensidad del sonido detectado.
+\end{itemize}
+
+\section*{Preguntas previas}
+\begin{enumerate}
+    \item ¿Qué es el efecto piezoeléctrico directo y cómo se utiliza para detectar sonido?
+    \item ¿Por qué un piezoeléctrico sumergido en agua actúa como un hidrófono?
+    \item ¿Qué función cumple el amplificador MAX4466? ¿Por qué es necesario para un Arduino de 5V?
+    \item Investigue: ¿Qué rango de frecuencias audibles puede detectar un cerámico PZT típico?
+\end{enumerate}
+
+\section*{Materiales y equipo}
+\begin{itemize}
+    \item Arduino Uno.
+    \item Sensor piezoeléctrico con revestimiento impermeable (Keyestudio o similar).
+    \item Módulo amplificador MAX4466 (ganancia ajustable).
+    \item Recipiente transparente con agua (pecera o cubo).
+    \item LEDs (azul y rojo) y resistencias de 220Ω.
+    \item Mini protoboard.
+    \item Cables Dupont.
+    \item Fuente de sonido subacuática (puede ser un motor pequeño, un diapasón, o altavoz sumergible).
+    \item Opcional: Motores de vibración (de celulares) para simular sonidos de animales acuáticos.
+\end{itemize}
+
+> Mía:
+\section*{Procedimiento}
+\begin{enumerate}
+    \item \textbf{Preparación del sensor:}
+    \begin{enumerate}
+        \item Verifique que el sensor piezoeléctrico esté completamente impermeabilizado (si no, cúbralo con resina epóxica o silicona).
+        \item Conecte el piezoeléctrico a la entrada del amplificador MAX4466 (IN y GND).
+    \end{enumerate}
+    \item \textbf{Conexión eléctrica:}
+    \begin{enumerate}
+        \item Conecte el MAX4466 (VCC a 3.3V, GND a GND, OUT a A0).
+        \item Conecte los LEDs: ánodo largo a D6 (azul) y D7 (rojo) con resistencias de 220Ω a GND.
+        \item Cargue el código de la Sección 5.1 de la guía.
+    \end{enumerate}
+    \item \textbf{Calibración en aire y agua:}
+    \begin{enumerate}
+        \item En aire, ajuste la ganancia del MAX4466 (potenciómetro) hasta que el valor pico a pico en reposo sea alrededor de 200-300.
+        \item Sumerja el sensor en el agua (solo la cápsula piezo, no el circuito).
+        \item Observe el monitor serial. Ajuste \texttt{NIV\_NORM} y \texttt{NIV\_ALTO} según el ruido ambiental.
+    \end{enumerate}
+    \item \textbf{Pruebas de sonido:}
+    \begin{enumerate}
+        \item Genere sonidos suaves (golpear suavemente el borde del recipiente). Observe el LED azul.
+        \item Genere sonidos fuertes (golpe fuerte, motor vibrando dentro del agua). Observe el LED rojo.
+        \item Registre los valores pico a pico para cada tipo de sonido.
+    \end{enumerate}
+\end{enumerate}
+
+\section*{Esquemático}
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.8, transform shape]
+\draw (0,0) node[above]{Arduino Uno};
+\draw (1,0) node[ground]{GND};
+\draw (1,0.5) node[anchor=south]{3.3V / 5V};
+% MAX4466
+\draw (0.5,1.5) node[anchor=east]{A0} -- (2.5,1.5);
+\node at (3,1.5) {MAX4466 (OUT)};
+% LEDs
+\draw (0.5,2.5) node[anchor=east]{D6} -- (2.5,2.5);
+\node at (3,2.5) {LED Azul};
+\draw (0.5,3) node[anchor=east]{D7} -- (2.5,3);
+\node at (3,3) {LED Rojo};
+% Sensor piezo
+\draw (2.5,1) node[anchor=west]{Piezo (IN)} -- (1,1);
+\draw (1,1) to[short] (1,1.5);
+\draw (2.5,0.5) node[anchor=west]{GND piezo} -- (1,0.5);
+\end{circuitikz}
+\caption{Conexión del hidrófono piezoeléctrico con amplificador MAX4466 y LEDs indicadores.}
+\end{figure}
+
+\section*{Preguntas de análisis}
+\begin{enumerate}
+    \item ¿Cómo se relaciona la amplitud pico a pico medida con la intensidad del sonido (decibeles)? ¿Es una relación lineal?
+    \item ¿Qué diferencias observa en la sensibilidad del sensor dentro y fuera del agua? ¿Por qué?
+    \item ¿Qué limitaciones tiene este hidrófono casero comparado con un hidrófono profesional?
+    \item Explique por qué se usa una ventana de tiempo (\texttt{WINDOW}) para calcular el pico a pico en lugar de una muestra instantánea.
+    \item Proponga una modificación al código para estimar la frecuencia del sonido (dominio del tiempo) y clasificar diferentes tipos de fuentes.
+\end{enumerate}
+
+\section*{Bibliografía}
+\begin{itemize}
+    \item Hoja de datos MAX4466. Maxim Integrated.
+    \item “Piezoelectric sensors” – Measurement Specialties, Inc.
+\end{itemize}
