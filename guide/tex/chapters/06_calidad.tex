@@ -1,0 +1,101 @@
+% !TEX root = 00_instructivo.tex
+\chapter{Transductores electroquímicos y MEMS: Calidad de agua y aire}
+
+\section*{Objetivos}
+\begin{itemize}
+    \item Medir sólidos disueltos totales (TDS) en agua usando un sensor de conductividad.
+    \item Determinar el pH de muestras de agua (ácido, neutro, básico).
+    \item Detectar gases contaminantes (CO, metano, etanol) en el aire usando un sensor MEMS MiCS-5524.
+    \item Integrar los tres sensores para generar un perfil básico de contaminación ambiental.
+\end{itemize}
+
+\section*{Preguntas previas}
+\begin{enumerate}
+    \item ¿Qué es el TDS y cómo se relaciona con la conductividad eléctrica del agua?
+    \item ¿Por qué es importante compensar la temperatura en las mediciones de pH y TDS?
+
+> Mía:
+\item ¿Qué tipo de gases puede detectar el MiCS-5524? ¿Cuál es el principio de funcionamiento de un sensor de óxido metálico (MOS)?
+    \item Investigue: ¿Cuáles son los límites máximos permisibles de TDS y pH para agua potable según la OMS?
+\end{enumerate}
+
+\section*{Materiales y equipo}
+\begin{itemize}
+    \item Arduino Uno.
+    \item Sensor de TDS (Gravity: Analog TDS Sensor).
+    \item Sensor de pH (Gravity: Analog pH Meter Kit).
+    \item Sensor de gas MiCS-5524 (Fermion MEMS).
+    \item Muestras de agua: destilada, potable, agua con sal, agua con vinagre (ácido), agua con bicarbonato (básico).
+    \item Soluciones buffer de calibración (pH 4.0, pH 7.0) y solución de calibración TDS (1413 µS/cm).
+    \item Recipientes plásticos pequeños (vasos de precipitado).
+    \item Mini protoboard y cables Dupont.
+    \item Fuente de aire contaminado (encendedor sin llama para gas, alcohol en algodón).
+\end{itemize}
+
+\section*{Procedimiento}
+\begin{enumerate}
+    \item \textbf{Calibración de sensores (fundamental):}
+    \begin{enumerate}
+        \item \textbf{pH:} Siga el código de la Sección 6.2. Sumerja el electrodo en buffer pH 7.0, luego en pH 4.0 usando los comandos seriales \texttt{calph} para calibrar.
+        \item \textbf{TDS:} Con el código de la Sección 6.1, sumerja la sonda en la solución de 1413 µS/cm y ajuste el factor de calibración según la librería.
+    \end{enumerate}
+    \item \textbf{Conexión y carga de código:}
+    \begin{enumerate}
+        \item Conecte TDS (A1), pH (A0) y MiCS-5524 (A0? ¡Cuidado! Use pines analógicos diferentes, por ejemplo TDS a A1, pH a A2, MiCS a A3). Ajuste el código.
+        \item Conecte el pin EN del MiCS-5524 a D10.
+        \item Cargue un código unificado que lea los tres sensores cada 2 segundos.
+    \end{enumerate}
+    \item \textbf{Medición de calidad de agua:}
+    \begin{enumerate}
+        \item Mida TDS y pH de la muestra de agua destilada (referencia).
+        \item Mida agua potable de la llave.
+        \item Mida agua con una cucharada de sal (alto TDS).
+        \item Mida agua con vinagre (pH ácido) y agua con bicarbonato (pH básico).
+        \item Registre todos los valores en una tabla.
+    \end{enumerate}
+    \item \textbf{Medición de calidad de aire:}
+    \begin{enumerate}
+        \item Espere 3 minutos a que el MiCS-5524 se caliente (LED indicador o mensaje serial).
+        \item Registre los valores de CO, CH4, etanol en aire ambiente.
+        \item Acerque un algodón con alcohol y observe el aumento de etanol.
+        \item (Con cuidado) Acerque un encendedor sin llama (solo gas) y observe el aumento de metano/CO.
+    \end{enumerate}
+\end{enumerate}
+
+\section*{Esquemático}
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.7, transform shape]
+\draw (0,0) node[above]{Arduino Uno};
+\draw (1,0) node[ground]{GND};
+\draw (1,0.5) node[anchor=south]{5V};
+% pH a A2
+\draw (0.5,1.5) node[anchor=east]{A2} -- (2.5,1.5);
+\node at (3,1.5) {pH Sensor};
+% TDS a A1
+\draw (0.5,2) node[anchor=east]{A1} -- (2.5,2);
+\node at (3,2) {TDS Sensor};
+% MiCS-5524 a A3 y EN a D10
+\draw (0.5,2.5) node[anchor=east]{A3} -- (2.5,2.5);
+\draw (0.5,3) node[anchor=east]{D10} -- (2.5,3);
+\node at (3,2.75) {MiCS-5524 (A0/EN)};
+\end{circuitikz}
+\caption{Conexión de sensores de calidad de agua (pH, TDS) y aire (MiCS-5524). Use pines analógicos distintos para evitar interferencias.}
+\end{figure}
+
+\section*{Preguntas de análisis}
+\begin{enumerate}
+    \item Compare los valores de TDS y pH entre agua destilada, potable y contaminada con sal. ¿Son los esperados según la teoría?
+    \item ¿Por qué el agua con bicarbonato (básico) puede tener un TDS más alto que el agua neutra?
+    \item ¿Qué concentración de CO detectó en aire ambiente? ¿Supera el límite de 9 ppm recomendado por la OMS?
+    \item Explique por qué el MiCS-5524 requiere un período de calentamiento. ¿Qué ocurre si no se respeta?
+    \item Proponga un sistema de alerta temprana usando estos tres sensores y un actuador (buzzer, relé). ¿Qué umbrales usaría?
+\end{enumerate}
+
+> Mía:
+\section*{Bibliografía}
+\begin{itemize}
+    \item Hoja de datos MiCS-5524. SGX Sensortech.
+    \item DFRobot Gravity: Analog TDS Sensor / pH Meter – Wiki oficial.
+    \item WHO Guidelines for Drinking-water Quality, 4th edition.
+\end{itemize}
