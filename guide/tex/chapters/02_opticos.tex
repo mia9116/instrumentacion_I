@@ -1,0 +1,65 @@
+% !TEX root = 00_instructivo.tex
+\chapter{Transductores ópticos: Fototransistor CNY70 y sensor de color TCS3200}
+
+\section*{Objetivos}
+\begin{itemize}
+    \item Implementar un portón óptico con CNY70 para detectar reflectancia en hojas de colores.
+    \item Utilizar el TCS3200 para discriminar colores de forma programada.
+\end{itemize}
+
+\section*{Materiales y equipo}
+\begin{itemize}
+    \item Sensor CNY70 (reflectivo IR).
+    \item Sensor TCS3200 (fototransistor de color).
+    \item Arduino Uno.
+    \item Mini protoboard de 9 canales.
+    \item Hojas de colores (blanco, negro, rojo, verde, azul).
+    \item Resistencias: 220 $\Omega$ (LED), 10 k$\Omega$ (pull-up opcional).
+    \item Cables Dupont.
+\end{itemize}
+
+\section*{Instrucciones}
+\begin{enumerate}
+    \item Conecte el CNY70: LED IR a través de 220 $\Omega$ a 5V; fototransistor colector a 5V, emisor a A0 con resistor pull-down de 10k a GND.
+    \item Conecte el TCS3200: VCC a 5V, GND a GND, S0/S1 a 5V (frecuencia 100\%), S2/S3 a pines digitales (para seleccionar color), OUT a pin digital (medición de frecuencia).
+    \item Calibre el CNY70 midiendo voltaje analógico con hoja blanca y hoja negra.
+    \item Mida la reflectancia para cada hoja de color (10 lecturas).
+    \item Con el TCS3200, programe la lectura de componentes RGB y calcule el color dominante.
+    \item Compare la capacidad de discriminación entre ambos sensores.
+\end{enumerate}
+
+\section*{Esquemático}
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.8]
+\draw (0,0) node[above]{Arduino Uno};
+% CNY70
+\draw (1,0.5) node[anchor=east]{5V} -- (2,0.5) node[anchor=west]{LED+};
+\draw (1,1) node[anchor=east]{GND} -- (2,1) node[anchor=west]{LED-};
+\draw (1,1.5) node[anchor=east]{A0} -- (2,1.5) node[anchor=west]{Emisor (pull-down 10k)};
+% TCS3200
+\draw (1,2.5) node[anchor=east]{5V} -- (3,2.5);
+\draw (1,3) node[anchor=east]{GND} -- (3,3);
+\draw (1,3.5) node[anchor=east]{D2} -- (3,3.5) node[anchor=west]{OUT};
+\draw (1,4) node[anchor=east]{D3} -- (3,4) node[anchor=west]{S2};
+\draw (1,4.5) node[anchor=east]{D4} -- (3,4.5) node[anchor=west]{S3};
+% S0,S1 atados a 5V
+\draw (3,2.5) -- (3.5,2.5) node[anchor=west]{S0,S1 a 5V};
+\end{circuitikz}
+\caption{Conexiones en mini protoboard. Use resistencias pull-down para el CNY70.}
+\end{figure}
+
+\section*{Preguntas de análisis}
+\begin{enumerate}
+    \item ¿Por qué el CNY70 no puede diferenciar el rojo del verde si ambos tienen reflectancia similar en IR?
+    \item ¿Qué ventaja tiene el TCS3200 al usar filtros de color RGB?
+    \item Proponga una aplicación industrial donde se necesite un sensor de bajo costo como el CNY70.
+    \item ¿Cómo afecta la distancia sensor-superficie a la lectura del CNY70?
+\end{enumerate}
+
+\section*{Bibliografía}
+\begin{itemize}
+    \item CNY70 Datasheet. Vishay.
+    \item TCS3200 Color Sensor Datasheet. TAOS.
+    \item Arduino Color Sensing Tutorial – Adafruit.
+\end{itemize}
