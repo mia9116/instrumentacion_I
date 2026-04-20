@@ -1,0 +1,92 @@
+% !TEX root = 00_instructivo.tex
+\chapter{Transductores mecánicos: Acelerómetro y podómetro}
+
+\section*{Objetivos}
+\begin{itemize}
+    \item Comprender el principio de funcionamiento de un acelerómetro MEMS (MPU6050).
+    \item Implementar un algoritmo de conteo de pasos (podómetro) usando la magnitud del vector de aceleración.
+    \item Evaluar la precisión del podómetro en diferentes condiciones de movimiento (caminar, correr, movimientos bruscos).
+    \item Alimentar el sistema con una batería portable para demostrar su uso en aplicaciones de monitoreo de actividad.
+\end{itemize}
+
+\section*{Preguntas previas}
+\begin{enumerate}
+    \item ¿Qué es una IMU (Unidad de Medición Inercial) y qué grados de libertad ofrece el MPU6050?
+    \item ¿Por qué se usa la magnitud de la aceleración (\( \sqrt{a_x^2 + a_y^2 + a_z^2} \)) y no un solo eje para detectar pasos?
+    \item ¿Qué es el \textit{efecto de histéresis} en el contexto de un umbral de detección?
+    \item Investigue: ¿qué es el DMP (Digital Motion Processor) del MPU6050 y para qué sirve?
+\end{enumerate}
+
+\section*{Materiales y equipo}
+\begin{itemize}
+    \item Arduino Uno (o Arduino Nano para versión portable).
+    \item Módulo MPU6050 (acelerómetro + giróscopo 6-DOF).
+    \item Batería recargable de 9V o power bank 5V (para alimentación portable).
+    \item Conector para batería (clips o cable USB).
+    \item Mini protoboard.
+    \item Cables Dupont.
+    \item Cinta o velcro para fijar el conjunto a la cintura o al tobillo.
+    \item Computadora con IDE Arduino (para carga inicial y monitoreo).
+\end{itemize}
+
+\section*{Procedimiento}
+\begin{enumerate}
+    \item \textbf{Conexión y prueba del MPU6050:}
+    \begin{enumerate}
+        \item Conecte el MPU6050 al Arduino (VCC a 5V, GND a GND, SDA a A4, SCL a A5).
+        \item Cargue el código de la Sección 4.1 de la guía (podómetro).
+        \item Verifique en el monitor serial que se leen valores de aceleración.
+    \end{enumerate}
+    \item \textbf{Calibración del umbral:}
+    \begin{enumerate}
+        \item Sujete el MPU6050 firmemente a su cintura o tobillo.
+        \item Camine 20 pasos en un lugar plano mientras observa el monitor serial.
+        \item Ajuste la constante \texttt{THRESH} en el código (por ejemplo, 1.2, 1.5, 1.8) hasta que el conteo sea preciso (error < 2 pasos).
+    \end{enumerate}
+    \item \textbf{Prueba en diferentes escenarios:}
+    \begin{enumerate}
+        \item Realice 3 pruebas de 50 pasos cada una: caminando normalmente, caminando rápido y subiendo escaleras.
+        \item Anote los pasos contados por el Arduino y compárelos con los pasos reales.
+        \item Calcule el error porcentual para cada escenario.
+    \end{enumerate}
+    \item \textbf{Modo portable:}
+    \begin{enumerate}
+        \item Desconecte el Arduino de la computadora y conéctelo a la batería portable.
+        \item (Opcional) Agregue una pantalla LCD de 16x2 para mostrar el conteo en tiempo real.
+        \item Camine 100 pasos en un circuito cerrado y al final reconecte a la PC para leer el conteo.
+    \end{enumerate}
+\end{enumerate}
+
+\section*{Esquemático}
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.8, transform shape]
+\draw (0,0) node[above]{Arduino Nano (portable)};
+\draw (1,0) node[ground]{GND};
+\draw (1,0.5) node[anchor=south]{5V};
+\draw (0.5,1) node[anchor=east]{A4 (SDA)} -- (2.5,1);
+\draw (0.5,1.5) node[anchor=east]{A5 (SCL)} -- (2.5,1.5);
+\node at (3,1.25) {MPU6050};
+% Batería
+\draw (1,2.5) node[anchor=west]{Batería 9V} -- (2.5,2.5);
+\draw (1,2.5) to[short, *-] (1,2);
+\draw (1,2) to[short] (1,0.5);
+\draw (2.5,2.5) node[ground]{GND};
+\end{circuitikz}
+\caption{Conexión del MPU6050 a un Arduino Nano alimentado por batería. El bus I2C es compartido.}
+\end{figure}
+
+\section*{Preguntas de análisis}
+\begin{enumerate}
+    \item ¿Por qué la magnitud de la aceleración es más robusta para la detección de pasos que usar solo el eje Z?
+    \item ¿Qué limitaciones tiene este algoritmo podómetro? ¿Cómo se podría mejorar usando el giróscopo?
+    \item ¿Por qué se incluye la variable \texttt{stepActive} y el umbral \texttt{THRESH * 0.5}? Explique su función para evitar doble conteo.
+    \item Compare el consumo energético del sistema con y sin batería. ¿Es viable para un uso de 24 horas?
+    \item Proponga una modificación al código para estimar la distancia recorrida (requiere conocer la longitud del paso).
+\end{enumerate}
+
+\section*{Bibliografía}
+\begin{itemize}
+    \item Hoja de datos MPU6050. InvenSense
+    \item “Step counting using accelerometers” – Application Note, Analog Devices.
+\end{itemize}
