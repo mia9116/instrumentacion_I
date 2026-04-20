@@ -1,0 +1,76 @@
+% !TEX root = 00_instructivo.tex
+\chapter{Transductores eléctricos (cambios de resistencia), térmicos y de radiación}
+
+\section*{Objetivos}
+\begin{itemize}
+    \item Medir humedad de sustrato (FC-28) y humedad ambiental (BME280) en un terrario.
+    \item Evaluar la radiación UV con el sensor VEML6070.
+    \item Comparar la precisión de un termistor (BMP280) frente a una termocupla tipo K.
+\end{itemize}
+
+\section*{Materiales y equipo}
+\begin{itemize}
+    \item Terrario con arena y sustrato.
+    \item Sensor de humedad para sustrato FC-28.
+    \item Sensor BME280 (humedad ambiental y temperatura barométrica).
+    \item Sensor UV VEML6070.
+    \item Sensor BMP280 (termistor).
+    \item Termocupla tipo K con módulo MAX6675 (SPI).
+    \item Arduino Uno.
+    \item Mini protoboard de 9 canales.
+    \item Cables Dupont (hembra-macho y macho-macho).
+    \item Fuente USB y computadora con IDE Arduino.
+\end{itemize}
+
+\section*{Procedimiento}
+\begin{enumerate}
+    \item Conecte los sensores al Arduino según el esquemático.
+    \item Cargue el código que lee todos los sensores periódicamente (cada 2 s).
+    \item Coloque el FC-28 en el sustrato a 2 cm de profundidad.
+    \item Registre durante 30 minutos: humedad del suelo, humedad ambiental, temperatura (BMP280 y termocupla), índice UV.
+    \item Compare los valores de temperatura aplicando calor suave (lámpara incandescente) y ventilando.
+    \item Elabore una tabla con promedios y desviaciones.
+\end{enumerate}
+
+\section*{Esquemático}
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.8, transform shape]
+\draw (0,0) node[above]{Arduino Uno};
+% Pines de alimentación
+\draw (2,0) node[ground]{GND};
+\draw (2,0.5) node[anchor=south]{5V};
+% Sensores I2C (BME280, VEML6070, BMP280) van a A4(SDA) y A5(SCL)
+\draw (1,1) node[anchor=east]{A4 (SDA)} -- (3,1);
+\draw (1,1.5) node[anchor=east]{A5 (SCL)} -- (3,1.5);
+% FC-28: VCC a 5V, GND a GND, AO a A0
+\draw (1,2) node[anchor=east]{A0} -- (3,2) node[anchor=west]{FC-28 (AO)};
+% Termocupla MAX6675: SO a D12, CS a D10, SCK a D13
+\draw (1,2.5) node[anchor=east]{D12 (SO)} -- (3,2.5);
+\draw (1,3) node[anchor=east]{D10 (CS)} -- (3,3);
+\draw (1,3.5) node[anchor=east]{D13 (SCK)} -- (3,3.5);
+% Etiquetas
+\node at (4,1) {BME280/VEML6070/BMP280 (I2C)};
+\node at (4,2) {FC-28};
+\node at (4,3) {MAX6675};
+\end{circuitikz}
+\caption{Conexiones en protoboard de 9 canales. Use el bus de 5V y GND para todos los sensores.}
+\end{figure}
+
+\textbf{Nota:} El BMP280 y el BME280 comparten el bus I2C (direcciones diferentes). El VEML6070 también es I2C.
+
+\section*{Preguntas de análisis}
+\begin{enumerate}
+    \item ¿Qué diferencias observa entre las temperaturas del BMP280 y la termocupla? ¿A qué se deben?
+    \item ¿Cómo influye la humedad del sustrato en la humedad ambiental dentro del terrario?
+    \item Explique por qué el sensor UV requiere comunicación I2C y no una entrada analógica simple.
+    \item Proponga una mejora para reducir el tiempo de respuesta de la termocupla.
+\end{enumerate}
+
+\section*{Bibliografía}
+\begin{itemize}
+    \item Hoja de datos FC-28. Rambal Electronics.
+    \item Adafruit VEML6070 UV Sensor Breakout – Learning System.
+    \item BME280 Datasheet. Bosch Sensortec.
+    \item MAX6675 Datasheet. Maxim Integrated.
+\end{itemize}
