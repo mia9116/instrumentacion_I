@@ -1,0 +1,152 @@
+> Mía:
+[4/20, 08:37] Kashana 🌻: % !TEX root = 00_instructivo.tex
+\chapter{Transductores eléctricos y magnéticos: Magnetohidrodinamica}
+
+\section*{Objetivos}
+\begin{itemize}
+    \item Visualizar campos magnéticos mediante limaduras de hierro entre dos placas acrílicas.
+    \item Medir la intensidad del campo magnético generado por un imán y una PCB con corriente usando un magnetómetro QMC5883L.
+    \item Cuantificar la corriente eléctrica en un circuito mediante el efecto Hall (sensor ACS712).
+    \item Relacionar la corriente eléctrica, el campo magnético generado y su efecto sobre partículas ferrosas.
+\end{itemize}
+
+\section*{Preguntas previas}
+\begin{enumerate}
+    \item ¿Qué establece la ley de Ampere sobre la relación entre corriente eléctrica y campo magnético?
+    \item ¿Cuál es la diferencia entre el efecto Hall y la magnetorresistencia anisotropa (AMR)?
+    \item ¿Por qué es necesario calibrar un magnetómetro para compensar el \textit{hard-iron effect}?
+    \item ¿Qué precauciones de seguridad se deben tener al trabajar con PCB y agua en el mismo experimento?
+\end{enumerate}
+
+\section*{Materiales y equipo}
+\begin{itemize}
+    \item Arduino Uno.
+    \item Sensor de efecto Hall de corriente ACS712 (versión 5A).
+    \item Magnetómetro de 3 ejes QMC5883L / GY-271.
+    \item PCB con circuito integrado (pistas de cobre).
+    \item Dos placas de acrílico transparente.
+    \item Polvo ferroso (limaduras de hierro).
+    \item Imanes de neodimio (diferentes tamaños).
+    \item Fuente de alimentación externa para la PCB (batería 9V o fuente de laboratorio).
+    \item Recipiente de vidrio con agua y tinte (opcional, para visualizar propulsión iónica).
+    \item Mini protoboard y cables Dupont.
+    \item Cinta aislante y pinzas de cocodrilo.
+\end{itemize}
+
+\section*{Procedimiento}
+\begin{enumerate}
+    \item \textbf{Preparación de la visualización magnética:}
+    \begin{enumerate}
+        \item Espolvoree una fina capa de polvo ferroso entre las dos láminas de acrílico. Selle los bordes con cinta.
+        \item Coloque un imán debajo de las láminas y observe cómo se alinean las limaduras con las líneas de campo magnético.
+        \item Dibuje o fotografíe el patrón observado.
+    \end{enumerate}
+    \item \textbf{Conexión y prueba del magnetómetro:}
+    \begin{enumerate}
+        \item Conecte el QMC5883L al Arduino (VCC a 3.3V, GND a GND, SDA a A4, SCL a A5).
+        \item Cargue el código proporcionado en la guía (Sección 3.1).
+        \item Acérquelo al imán y observe los valores en los ejes X, Y, Z. Anote la magnitud del campo.
+    \end{enumerate}
+    \item \textbf{Medición de corriente con el ACS712:}
+    \begin{enumerate}
+        \item Conecte el ACS712 (VCC a 5V, GND a GND, OUT a A1).
+        \item Conecte la PCB (o un circuito simple con una resistencia) en serie con el terminal de medición del ACS712.
+        \item Cargue el código de la Sección 3.2 y registre la corriente cuando la PCB está encendida y apagada.
+    \end{enumerate}
+    \item \textbf{Experimento integrador (propulsión iónica opcional):}
+    \begin{enumerate}
+        \item Coloque la PCB (con pistas desnudas) sumergida en el recipiente con agua y unas gotas de tinte.
+        \item Conecte la PCB a la fuente externa a través del ACS712 para medir la corriente.
+        \item Coloque el magnetómetro cerca de las placas.
+        \item Encienda la corriente y observe la dirección del movimiento del tinte (fuerza de Lorentz).
+        \item Registre la corriente medida y los cambios en el campo magnético.
+    \end{enumerate}
+\end{enumerate}
+
+\section*{Esquemático}
+\begin{figure}[htbp]
+\centering
+\begin{circuitikz}[scale=0.8, transform shape]
+\draw (0,0) node[above]{Arduino Uno};
+% Alimentación
+\draw (1,0) node[ground]{GND};
+\draw (1,0.5) node[anchor=south]{5V / 3.3V};
+% Magnetómetro I2C
+
+> Mía:
+\draw (0.5,1) node[anchor=east]{A4 (SDA)} -- (2.5,1);
+\draw (0.5,1.5) node[anchor=east]{A5 (SCL)} -- (2.5,1.5);
+\node at (3,1.25) {QMC5883L (I2C)};
+% ACS712
+\draw (0.5,2.5) node[anchor=east]{A1} -- (2.5,2.5);
+\node at (3,2.5) {ACS712 (OUT)};
+% Circuito de potencia (PCB sumergida)
+\draw (2.5,3.5) node[anchor=west]{PCB en agua} -- (1,3.5);
+\draw (1,3.5) to[short, *-] (1,2.5);
+\draw (1,2.5) to[short] (1,2.5) node[circ]{};
+\draw (2.5,4) node[anchor=west]{Fuente externa} -- (1,4);
+\draw (1,4) to[short] (1,3.5);
+% El ACS712 va en serie con la PCB
+\draw (1,2.5) node[anchor=east]{IP+} -- (1,3);
+\draw (1,3) to[short] (1,3.5);
+\end{circuitikz}
+\caption{Conexiones para la práctica de transductores magnéticos. El ACS712 se conecta en serie con la carga (PCB) para medir la corriente que genera el campo magnético.}
+\end{figure}
+
+\section*{Preguntas de análisis}
+\begin{enumerate}
+    \item ¿Cómo se relaciona la magnitud del campo magnético medida por el QMC5883L con la corriente registrada por el ACS712?
+    \item ¿Qué diferencias observa entre el patrón de limaduras generado por un imán y el generado por la PCB con corriente?
+    \item ¿Por qué es importante usar una fuente externa y no los 5V del Arduino para alimentar la PCB sumergida?
+    \item Explique físicamente por qué el tinte se mueve en una dirección específica al aplicar corriente en presencia de un campo magnético (Fuerza de Lorentz sobre los iones).
+    \item ¿Qué fuentes de error pueden afectar las lecturas del magnetómetro y cómo se minimizan?
+\end{enumerate}
+
+\section*{Bibliografía}
+\begin{itemize}
+    \item Hoja de datos ACS712. Allegro MicroSystems.
+    \item Hoja de datos QMC5883L. Honeywell.
+   
+\end{itemize}
+[4/20, 08:37] Kashana 🌻: % !TEX root = 00_instructivo.tex
+\chapter{Transductores mecánicos: Acelerómetro y podómetro}
+
+\section*{Objetivos}
+\begin{itemize}
+    \item Comprender el principio de funcionamiento de un acelerómetro MEMS (MPU6050).
+    \item Implementar un algoritmo de conteo de pasos (podómetro) usando la magnitud del vector de aceleración.
+    \item Evaluar la precisión del podómetro en diferentes condiciones de movimiento (caminar, correr, movimientos bruscos).
+    \item Alimentar el sistema con una batería portable para demostrar su uso en aplicaciones de monitoreo de actividad.
+\end{itemize}
+
+\section*{Preguntas previas}
+\begin{enumerate}
+    \item ¿Qué es una IMU (Unidad de Medición Inercial) y qué grados de libertad ofrece el MPU6050?
+    \item ¿Por qué se usa la magnitud de la aceleración (\( \sqrt{a_x^2 + a_y^2 + a_z^2} \)) y no un solo eje para detectar pasos?
+    \item ¿Qué es el \textit{efecto de histéresis} en el contexto de un umbral de detección?
+    \item Investigue: ¿qué es el DMP (Digital Motion Processor) del MPU6050 y para qué sirve?
+\end{enumerate}
+
+\section*{Materiales y equipo}
+\begin{itemize}
+    \item Arduino Uno (o Arduino Nano para versión portable).
+    \item Módulo MPU6050 (acelerómetro + giróscopo 6-DOF).
+    \item Batería recargable de 9V o power bank 5V (para alimentación portable).
+    \item Conector para batería (clips o cable USB).
+    \item Mini protoboard.
+    \item Cables Dupont.
+    \item Cinta o velcro para fijar el conjunto a la cintura o al tobillo.
+    \item Computadora con IDE Arduino (para carga inicial y monitoreo).
+\end{itemize}
+
+\section*{Procedimiento}
+\begin{enumerate}
+    \item \textbf{Conexión y prueba del MPU6050:}
+    \begin{enumerate}
+        \item Conecte el MPU6050 al Arduino (VCC a 5V, GND a GND, SDA a A4, SCL a A5).
+        \item Cargue el código de la Sección 4.1 de la guía (podómetro).
+        \item Verifique en el monitor serial que se leen valores de aceleración.
+    \end{enumerate}
+    \item \textbf{Calibración del umbral:}
+    \begin{enumerate}
+        \item Sujete el MPU6050 firmemente a su cintura o tobillo.
